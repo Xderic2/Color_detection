@@ -1,27 +1,23 @@
 # pip install pandas opencv-python
-# visit pyGuru on youtube
 
 import cv2
 import pandas as pd
 
-# --------------------------------------------------------------------------
-
 img_path = input()
-csv_path = 'colors.csv'
+csv_path = 'all_the_colors_of_the_universe.csv.csv'
 
-# reading csv file
+
 index = ['color', 'color_name', 'hex', 'R', 'G', 'B']
 df = pd.read_csv(csv_path, names=index, header=None)
 
-# reading image
+
 img = cv2.imread(img_path)
 img = cv2.resize(img, (1000,800))
 
-#declaring global variables
 clicked = False
 r = g = b = xpos = ypos = 0
 
-#function to calculate minimum distance from all colors and get the most matching color
+
 def get_color_name(R,G,B):
 	minimum = 1000
 	for i in range(len(df)):
@@ -32,34 +28,28 @@ def get_color_name(R,G,B):
 
 	return cname
 
-#function to get x,y coordinates of mouse double click
-def draw_function(event, x, y, flags, params):
-	if event == cv2.EVENT_LBUTTONDBLCLK:
+
+def double_click(clicky, x_oord, y_coord, flags, paramaters):
+	if clicky == cv2.EVENT_LBUTTONDBLCLK:
 		global b, g, r, xpos, ypos, clicked
 		clicked = True
-		xpos = x
-		ypos = y
-		b,g,r = img[y,x]
+		xpos = x_oord
+		ypos = y_coord
+		b,g,r = img[y_coord,x_oord]
 		b = int(b)
 		g = int(g)
 		r = int(r)
 
-# creating window
+
 cv2.namedWindow('image')
-cv2.setMouseCallback('image', draw_function)
+cv2.setMouseCallback('image', double_click)
 
 while True:
 	cv2.imshow('image', img)
 	if clicked:
-		#cv2.rectangle(image, startpoint, endpoint, color, thickness)-1 fills entire rectangle 
 		cv2.rectangle(img, (20,20), (600,60), (b,g,r), -1)
-
-		#Creating text string to display( Color name and RGB values )
 		text = get_color_name(r,g,b) + ' R=' + str(r) + ' G=' + str(g) + ' B=' + str(b)
-		#cv2.putText(img,text,start,font(0-7),fontScale,color,thickness,lineType )
 		cv2.putText(img, text, (50,50), 2,0.8, (255,255,255),2,cv2.LINE_AA)
-
-		#For very light colours we will display text in black colour
 		if r+g+b >=600:
 			cv2.putText(img, text, (50,50), 2,0.8, (0,0,0),2,cv2.LINE_AA)
 
