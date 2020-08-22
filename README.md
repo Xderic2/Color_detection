@@ -141,18 +141,20 @@ while True:
 	cv2.imshow('image', img)
 	if clicked:
 		cv2.rectangle(img, (20,20), (600,60), (b,g,r), -1)
-
 		text = get_color_name(r,g,b) + ' R=' + str(r) + ' G=' + str(g) + ' B=' + str(b)
 		cv2.putText(img, text, (50,50), 2,0.8, (255,255,255),2,cv2.LINE_AA)
-
 		if r+g+b >=600:
 			cv2.putText(img, text, (50,50), 2,0.8, (0,0,0),2,cv2.LINE_AA)
-
 	if cv2.waitKey(20) & 0xFF == 27:
 		break
 
 cv2.destroyAllWindows()
 ```
+
+## Conclussion
+#### I would want to add some sort of categorization program to this. I think it would be awesome For the person to click on something then the program tells you what that object is.Something along the lines of this - https://tryolabs.com/blog/2017/08/30/object-detection-an-overview-in-the-age-of-deep-learning/.
+#### Adding more colors would alays be great as well. The list I pulled was the most that I found, with them ranging from 200 to 800 (one I got) colors. I personally know about 7, so any of these is a big plus.
+#### I tried to add facial recognition software on here, but probably needed another 2 to 3 weeks for that. 
 
 
 
